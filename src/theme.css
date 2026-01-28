@@ -1,0 +1,41 @@
+:root {
+  --bg: #f8fafc;
+  --text: #0f172a;
+  --primary: #2563eb;
+  --secondary: #16a34a;
+  --border: #cbd5e1;
+}
+
+body {
+  margin: 0;
+  font-family: system-ui, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+}
+
+header {
+  padding: 16px;
+  border-bottom: 1px solid var(--border);
+}
+
+nav a {
+  margin-right: 16px;
+  text-decoration: none;
+  color: var(--primary);
+  font-weight: 600;
+}
+
+section {
+  border: 1px solid var(--border);
+  padding: 16px;
+  border-radius: 8px;
+}
+
+button {
+  background: var(--primary);
+  color: white;
+  border: none;
+  padding: 10px 16px;
+  border-radius: 6px;
+  cursor: pointer;
+}

@@ -1,0 +1,362 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap');
+
+/* THEME VARIABLES */
+:root {
+  --primary: #1C5B7B;
+  --primary-light: #75a7c0;
+  --background: #E3F4F4;
+  --white: #FFFFFF;
+  --text-dark: #1C5B7B;
+  --border-light: rgba(28, 91, 123, 0.15);
+}
+
+/* LOGIN PANEL WRAPPER */
+.login-panel-wrapper {
+  background-color: var(--background);
+  background: linear-gradient(to right, var(--background), var(--primary-light));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  height: 100vh;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Montserrat', sans-serif;
+}
+
+.container {
+  background-color: var(--white);
+  border-radius: 30px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+  position: relative;
+  overflow: hidden;
+  width: 768px;
+  max-width: 100%;
+  min-height: 480px;
+}
+
+.container p {
+  font-size: 14px;
+  line-height: 20px;
+  letter-spacing: 0.3px;
+  margin: 20px 0;
+  color: var(--white);
+}
+
+/* .container span {
+  font-size: 12px;
+  color: var(--text-dark);
+} */
+
+.container a {
+  color: var(--text-dark);
+  font-size: 13px;
+  text-decoration: none;
+  margin: 15px 0 10px;
+}
+
+
+/* Buttons - Login & Sign Up */
+.container button {
+  position: relative;
+  height: 48px;        /* FIXED HEIGHT: Text changes won't resize the button */
+  min-width: 180px;
+  display: flex; /* flex centers content perfectly */
+  align-items: center;
+  justify-content: center;
+  padding: 12px 45px;
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  background: linear-gradient(to right, var(--primary-light), var(--primary));
+  color: var(--white);
+  box-shadow: 0 4px 8px rgba(28, 91, 123, 0.3);
+  outline: none !important; /* prevent default outline jump */
+  white-space: nowrap;
+  user-select: none;
+  transition: all 0.2s ease;
+}
+
+/* Hover - subtle shadow, no move */
+.container button:hover {
+  box-shadow: 0 6px 12px rgba(28, 91, 123, 0.4);
+  transform: none !important; /* important: no translate */
+}
+
+/* Click effect - only scale */
+.container button:active {
+  transform: scale(0.97); /* subtle press effect, layout won't move */
+}
+
+/* Disabled style */
+.container button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+
+.container form {
+  background-color: var(--white);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  padding: 0 40px;
+  height: 100%;
+}
+
+.password-wrapper input,
+.container input {
+  background-color: var(--background) !important;
+  border: 1px solid var(--border-light) !important;
+  margin: 8px 0 !important;
+  padding: 10px 15px !important;
+  padding-right: 40px !important;
+  font-size: 13px !important;
+  border-radius: 8px !important;
+  width: 100% !important;
+  outline: none !important;
+  color: var(--text-dark) !important;
+  box-sizing: border-box !important;
+}
+
+/* FORM CONTAINERS */
+.form-container {
+  position: absolute;
+  top: 0;
+  height: 100%;
+  transition: all 0.6s ease-in-out;
+}
+
+.sign-in {
+  left: 0;
+  width: 50%;
+  z-index: 2;
+}
+
+.container.active .sign-in {
+  transform: translateX(100%);
+}
+
+.sign-up {
+  left: 0;
+  width: 50%;
+  opacity: 0;
+  z-index: 1;
+}
+
+.container.active .sign-up {
+  transform: translateX(100%);
+  opacity: 1;
+  z-index: 5;
+  animation: move 0.6s;
+}
+
+@keyframes move {
+  0%, 49.99% {
+    opacity: 0;
+    z-index: 1;
+  }
+  50%, 100% {
+    opacity: 1;
+    z-index: 5;
+  }
+}
+
+/* LOGO */
+
+
+.logo img {
+  height: 70px; /* adjust as needed */
+  width: auto;
+  object-fit: contain;
+  display: block;
+}
+
+
+/* TOGGLE PANELS */
+.toggle-container {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: 50%;
+  height: 100%;
+  overflow: hidden;
+  transition: all 0.6s ease-in-out;
+  border-radius: 150px 0 0 100px;
+  z-index: 1000;
+  pointer-events: none;
+}
+
+.container.active .toggle-container {
+  transform: translateX(-100%);
+  border-radius: 0 150px 100px 0;
+}
+
+.toggle {
+  background: linear-gradient(to right, var(--primary-light), var(--primary));
+  height: 100%;
+  color: var(--white);
+  position: relative;
+  left: -100%;
+  width: 200%;
+  transform: translateX(0);
+  transition: all 0.6s ease-in-out;
+}
+
+.toggle-container button {
+  pointer-events: auto;
+}
+
+
+
+.container.active .toggle {
+  transform: translateX(50%);
+}
+
+.toggle-panel {
+  position: absolute;
+  width: 50%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  text-align: center;
+  top: 0;
+  transform: translateX(0);
+  transition: all 0.6s ease-in-out;
+}
+
+.toggle-panel h1, .toggle-panel p {
+  text-align: center;
+}
+
+.toggle-left {
+  transform: translateX(-200%);
+}
+
+.container.active .toggle-left {
+  transform: translateX(0);
+}
+
+.toggle-right {
+  right: 0;
+  transform: translateX(0);
+}
+
+.container.active .toggle-right {
+  transform: translateX(200%);
+}
+
+/* ROLE TOGGLE REMOVED COLORS */
+.role-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 10px 0;
+}
+
+.role-label {
+  font-size: 13px;
+  margin: 0 8px;
+  color: var(--text-dark);
+  font-weight: 500;
+}
+
+.role-label.active {
+  color: var(--primary);
+}
+
+/* TOGGLE SWITCH */
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 50px;
+  height: 24px;
+}
+
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  background-color: #ccc;
+  border-radius: 34px;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  transition: 0.4s;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 18px;
+  width: 18px;
+  left: 3px;
+  bottom: 3px;
+  background-color: var(--white);
+  transition: 0.4s;
+  border-radius: 50%;
+}
+
+input:checked + .slider {
+  background-color: var(--primary);
+}
+
+input:checked + .slider:before {
+  transform: translateX(26px);
+}
+
+/* PASSWORD FIELD WITH EYE ICON */
+.password-wrapper {
+  position: relative;
+  width: 100%;
+}
+
+.password-toggle {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+  font-size: 18px;
+  color: var(--text-dark);
+  transition: color 0.2s ease;
+}
+
+.password-toggle:hover {
+  color: var(--primary);
+}
+
+/* ERROR MESSAGES */
+/* Fix: Always reserve space so the button never moves */
+.error {
+  color: #ff4d4f;
+  font-size: 13px;
+  text-align: center;
+  
+  /* Critical Changes */
+  height: 1px;       /* Keep this */
+  line-height: 20px;  /* Centers text vertically in that space */
+  margin: 10px 0;     /* Consistent spacing */
+  visibility: hidden; /* Default to hidden but keep space */
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+/* Only show it when there is actual text */
+.error.visible {
+  visibility: visible;
+  opacity: 1;
+}
