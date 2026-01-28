@@ -1,0 +1,286 @@
+.create-container {
+  background-color: #b6dbe3;
+  min-height: 100vh; /* allow scrolling on small screens */
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  font-family: Arial, sans-serif;
+  box-sizing: border-box;
+}
+
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  background-color: #b6dbe3; /* same as your container background */
+}
+
+
+/* HEADER */
+.create-header {
+  display: flex;
+  align-items: center;
+   flex-direction: column;
+  justify-content: center;
+  position: relative;
+  height: 60px;
+  margin-top: 40px;    /* add space from top of page */
+  margin-bottom: 100px; /* space between header and form */
+}
+
+.create-header .logo {
+  position: absolute;
+  left: 40px;
+  width: 80px;
+  height: 80px;
+  object-fit: contain;
+}
+
+.create-header h2 {
+  margin: 0;
+  /* margin-bottom: 40px; */
+  font-weight: 600;
+  font-size: 56px;
+  text-align: center;
+}
+
+/* FORM */
+.create-form {
+  width: 100%;
+  max-width: 1220px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+}
+
+.row {
+  display: flex;
+  gap: 60px;
+  width: 100%;
+}
+
+label {
+  display: flex;
+  flex-direction: column; /* label on top of input */
+  flex: 1;
+  font-weight: 600;
+  font-size: 14px;
+  color: #111;
+  margin-bottom: 40px;
+}
+
+label span {
+  margin-bottom: px;
+  font-weight: 600;
+  font-size: 13px;
+}
+
+input[type="text"],
+input[type="tel"],
+input[type="password"] {
+  width: 100%;
+  padding: 16px 18px;
+  font-size: 16px;
+  border-radius: 8px;
+}
+
+input:focus {
+  box-shadow: inset 0 0 6px #6ea1a9;
+}
+
+.full-width {
+  width: 100%;
+  margin-bottom: 18px;
+}
+
+/* CHECKBOX */
+label.checkbox-label {
+  display: flex;
+  flex-direction: row;     /* checkbox + text side-by-side */
+  align-items: flex-start; /* text stays beside checkbox */
+  gap: 12px;
+  margin-bottom: 20px;
+  font-size: 14px;
+}
+
+label.checkbox-label span {
+  display: inline;
+  line-height: 1.4;
+}
+
+label.checkbox-label input {
+  width: 18px;
+  height: 18px;
+}
+
+.error {
+  color: #b60000;
+  font-weight: 600;
+  margin-bottom: 15px;
+  text-align: center;
+}
+
+button {
+  width: 35%;
+  padding: 16px;
+  font-size: 30px;
+  border-radius: 10px;
+  display: block;
+  margin: 0 auto;
+  cursor: pointer;
+  background-color: #7da6a9;
+  color: white;
+  border: none;
+  transition: background-color 0.3s ease;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2); 
+}
+
+button:hover {
+  background-color: #699195;
+   box-shadow: 0 6px 10px rgba(0, 0, 0, 0.25); 
+}
+
+.success {
+  color: #0a9d0a; /* green */
+  font-weight: 600;
+  margin-bottom: 15px;
+  text-align: center;
+}
+
+/* Button disabled style */
+button:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+
+/* ===================== RESPONSIVE ===================== */
+@media (max-width: 900px) {
+  .row {
+    flex-direction: column; /* stack inputs */
+    gap: 22px;
+  }
+
+  button {
+    width: 100%;
+    font-size: 22px;
+  }
+
+  .create-header h2 {
+    font-size: 32px;
+    text-align: center;
+  }
+
+  .create-header .logo {
+    width: 60px;
+    height: 60px;
+    left: 10px;
+  }
+}
+
+@media (max-width: 480px) {
+  .create-container {
+    padding: 12px;
+  }
+
+  input[type="text"],
+  input[type="tel"],
+  input[type="password"] {
+    font-size: 14px;
+    padding: 14px;
+  }
+
+  label {
+    margin-bottom: 20px;
+  }
+
+  .checkbox-label {
+    font-size: 13px;
+  }
+}
+
+
+/* =================== PRIVACY MODAL =================== */
+
+/* Modal overlay */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0,0,0,0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+/* Modal card */
+.modal-card {
+  background-color: #fff;
+  width: 90%;
+  max-width: 600px;
+  border-radius: 15px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+  padding: 20px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+/* Modal header with title and X */
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-weight: 700;
+  font-size: 20px;
+  /* border-bottom: 2px solid #ccc; */
+  padding-bottom: 10px;
+  /* box-shadow: 0 2px 4px rgba(0,0,0,0.1); */
+}
+
+.modal-header .close-x {
+  cursor: pointer;
+  font-size: 22px;
+}
+
+/* Modal content */
+.modal-content {
+  font-size: 14px;
+  line-height: 1.6;
+  white-space: pre-line;
+  border-top: 2px solid #ccc;
+  border-bottom: 2px solid #ccc;
+  padding: 12px 0;
+}
+
+/* Modal buttons */
+.modal-buttons {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 12px;
+}
+
+.modal-buttons button {
+  padding: 8px 16px;
+  font-size: 14px;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+}
+
+.modal-buttons .agree-btn {
+  background-color: #7da6a9;
+  color: white;
+}
+
+.modal-buttons .cancel-btn {
+  background-color: #ccc;
+  color: #333;
+}

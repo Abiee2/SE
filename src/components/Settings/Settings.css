@@ -1,0 +1,94 @@
+.settings-wrapper {
+  max-width: 900px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+}
+
+.settings-card {
+  background: #C3DADA; /* Soft light teal background */
+  border-radius: 30px; /* More rounded corners per design */
+  overflow: hidden;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+}
+
+.card-header {
+  background: #6495AB; /* The specific blue header color */
+  color: #FFFFFF;
+  padding: 15px 30px;
+  font-weight: 700;
+  font-size: 22px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.setting-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 15px 30px;
+  border-bottom: 1.5px solid #A8C6C6; /* Subtle separator */
+  color: #1C5B7B;
+  font-weight: 700;
+  font-size: 18px;
+}
+
+/* Remove bottom border from the last row in a card */
+.setting-row:last-child {
+  border-bottom: none;
+}
+
+.size-btns {
+  display: flex;
+  gap: 8px;
+  margin-right: 15px;
+}
+
+.size-btns button {
+  padding: 6px 14px;
+  border-radius: 6px;
+  border: 1px solid #ddd;
+  background: white;
+  font-size: 14px;
+  font-weight: 500;
+  color: #444;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.size-btns button:hover {
+  background: #f0f0f0;
+}
+
+.pill-switch {
+  width: 52px;
+  height: 28px;
+  background: #B0BEC5; /* Grey when off */
+  border-radius: 20px;
+  position: relative;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.pill-switch.on {
+  background: #66BB6A; /* The green from your image */
+}
+
+.pill-switch::before {
+  content: '';
+  position: absolute;
+  width: 22px;
+  height: 22px;
+  background: white;
+  border-radius: 50%;
+  top: 3px;
+  left: 3px;
+  transition: 0.3s;
+}
+
+.pill-switch.on::before {
+  transform: translateX(24px);
+}
+
