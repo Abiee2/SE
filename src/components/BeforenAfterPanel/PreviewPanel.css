@@ -1,0 +1,326 @@
+/* --- Global Wrapper --- */
+.preview-page-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 40px;
+  background-color: #f8fafc;
+  min-height: 100vh;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.mode-header {
+  font-weight: 800;
+  letter-spacing: 4px;
+  color: #2c3e50;
+  margin-bottom: 20px;
+}
+
+/* --- Tablet Frame --- */
+.device-frame {
+  background: #ffffff;
+  border: 12px solid #4a8d9b;
+  border-radius: 40px;
+  width: 100%;
+  max-width: 500px; /* Reduced width for a cleaner look */
+  overflow: hidden; /* Para pantay ang kanto sa loob */
+  box-shadow: 0 20px 50px rgba(0,0,0,0.1);
+}
+
+/* --- Top Banner & Icons --- */
+.top-banner {
+  background-color: #a3c9d1;
+  padding: 25px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: white;
+}
+
+.top-banner h1 {
+  font-size: 1.5rem;
+  margin: 0;
+}
+
+.header-notif-icons {
+  display: flex;
+  gap: 10px;
+}
+
+.icon-badge {
+  background: rgba(255, 255, 255, 0.2); /* Semi-transparent white box */
+  padding: 8px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2rem;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+/* --- Apps Inventory & Alignment --- */
+.apps-inventory {
+  padding: 0 20px;
+  text-align: left;
+}
+
+.app-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 0;
+  border-bottom: 1px solid #eee;
+}
+
+.app-info {
+  font-weight: 500;
+  font-size: 0.9rem;
+}
+
+.status-label.not-connected {
+  font-style: italic;
+  color: #7f8c8d;
+  font-size: 0.85rem;
+}
+
+/* --- Apply Changes Button (Cleaned Up) --- */
+.action-row {
+  padding: 20px;
+  text-align: center;
+}
+
+.btn-action.apply {
+  background-color: #5cb85c;
+  color: white;
+  border: none;
+  padding: 12px 40px; /* Mas maliit na padding */
+  font-size: 1rem;
+  font-weight: 700;
+  border-radius: 30px; /* Rounded corners for modern look */
+  cursor: pointer;
+  transition: transform 0.2s, background 0.2s;
+  box-shadow: 0 4px 10px rgba(92, 184, 92, 0.3);
+  text-transform: none; /* Removed all-caps for cleaner look */
+  width: auto; /* Fits to text */
+}
+
+.btn-action.apply:hover {
+  background-color: #4cae4c;
+  transform: translateY(-2px);
+}
+
+/* --- Nav Grid & Cards --- */
+.nav-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  padding: 20px;
+  background-color: #f9f9f9;
+}
+
+.nav-card {
+  background: white;
+  padding: 15px 10px;
+  border-radius: 15px;
+  text-align: center;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+  border: 1px solid #edf2f7;
+}
+
+/* --- After State (Simplified Mode) Enhancements --- */
+
+.after-state {
+  display: flex;
+  flex-direction: column;
+  gap: 15px; /* Saktong gap lang para hindi masyadong mahaba */
+  padding-bottom: 25px;
+}
+
+.simplified-hero {
+  background-color: #a3c9d1;
+  color: white;
+  padding: 30px 20px; /* Binawasan ang padding para hindi kainin ang space */
+  text-align: center;
+  border-bottom-left-radius: 30px;
+  border-bottom-right-radius: 30px;
+  margin-bottom: 10px;
+}
+
+.simplified-hero h1 {
+  margin: 0;
+  font-size: 1.8rem;
+}
+
+.profile-tag {
+  margin-top: 5px;
+  font-size: 0.9rem;
+  opacity: 0.9;
+}
+
+/* Grid for Simplified Features - Mas Wide na Alignment */
+.simplified-features-grid {
+  display: grid;
+  grid-template-columns: 1fr; 
+  gap: 12px;
+  padding: 0 40px; /* Dinamihan ang padding sa gilid para maging wide ang cards */
+}
+
+.feature-item {
+  display: flex;
+  align-items: center;
+  background: #ffffff;
+  padding: 15px 20px;
+  border-radius: 18px;
+  border: 1px solid #edf2f7;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.03);
+  gap: 15px;
+}
+
+.feature-emoji {
+  font-size: 1.8rem; /* Pinaliit konti para mas neat */
+  background: #f8fafc;
+  padding: 8px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.feature-text h3 {
+  margin: 0;
+  font-size: 1rem;
+  color: #2d3748;
+}
+
+.feature-text p {
+  margin: 2px 0 0;
+  font-size: 0.8rem;
+  color: #718096;
+}
+
+/* --- Clean & Centered Buttons (Updated) --- */
+.action-row-split {
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Sinisiguradong laging nasa gitna */
+  gap: 12px;
+  padding: 10px 0;
+}
+
+.btn-action.applied-status, 
+.btn-action.dashboard-btn {
+  width: auto;           /* Para hindi mahaba */
+  min-width: 180px;      /* Consistent size */
+  padding: 10px 25px;    /* Kapareho ng padding ng Apply Changes */
+  border-radius: 30px;   /* Rounded modern look */
+  font-size: 0.9rem;
+  font-weight: 700;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-action.applied-status {
+  background-color: #f1f5f9;
+  color: #94a3b8;
+  cursor: not-allowed;
+  border: 1px solid #e2e8f0;
+}
+
+.btn-action.dashboard-btn {
+  background-color: #4a8d9b;
+  color: white;
+  box-shadow: 0 4px 10px rgba(74, 141, 155, 0.2);
+}
+
+.btn-action.dashboard-btn:hover {
+  background-color: #3d7581;
+  transform: translateY(-2px);
+}
+
+.toggle-section-simple {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  font-size: 0.9rem;
+  font-weight: bold;
+  color: #4a8d9b;
+  margin: 10px 0;
+}
+
+
+/* --- Tablet Frame (Pinalapad at Inayos ang Aspect Ratio) --- */
+.device-frame {
+  background: #ffffff;
+  border: 12px solid #4a8d9b;
+  border-radius: 40px;
+  width: 95%;            /* Gumamit ng percentage para mag-expand */
+  max-width: 900px;      /* Mula 500px, ginawa nating 900px para sa 'wide' look */
+  min-height: 600px;     /* Para may sapat na vertical space */
+  overflow: hidden;
+  box-shadow: 0 20px 50px rgba(0,0,0,0.1);
+  transition: all 0.3s ease; /* Smooth transition pag nag-switch ang state */
+}
+
+/* --- Layout Container (Flex alignment para laging neat) --- */
+.layout-container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+/* --- Before State: Grid Adjustment para sa Wide View --- */
+.before-state .nav-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr); /* Naka-2 columns pa rin pero mas malapad */
+  gap: 20px;
+  padding: 30px 60px; /* Dinagdagan ang side padding para magmukhang centered */
+  background-color: #f9f9f9;
+}
+
+.before-state .apps-inventory {
+  padding: 20px 60px; /* Pantay na padding sa grid sa itaas */
+  text-align: left;
+}
+
+/* --- After State: Feature Cards Adjustment --- */
+.simplified-features-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr); /* Ginawa nating 2 columns para ma-maximize ang wide space */
+  gap: 20px;
+  padding: 20px 60px; /* Side padding para maging neat tingnan */
+}
+
+/* Adjustment para sa wide feature items */
+.feature-item {
+  display: flex;
+  align-items: center;
+  background: #ffffff;
+  padding: 25px; /* Mas malaking padding sa loob ng card */
+  border-radius: 20px;
+  border: 1px solid #edf2f7;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.02);
+  gap: 20px;
+}
+
+/* --- Action Rows (Buttons Centering) --- */
+.action-row, .action-row-split {
+  padding: 30px 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px;
+}
+
+/* Buttons (Pantay ang size at centered) */
+.btn-action.apply,
+.btn-action.applied-status, 
+.btn-action.dashboard-btn {
+  width: 220px; /* Fixed width para lahat sila magkakasing-haba */
+  padding: 12px 0;
+  border-radius: 30px;
+  font-weight: 700;
+  text-align: center;
+}
+

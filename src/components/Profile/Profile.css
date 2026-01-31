@@ -1,0 +1,124 @@
+.content-area {
+  margin-left: 250px;
+  padding: 40px;
+  background: #f8fbfc;
+  min-height: 100vh;
+}
+
+.top-header-icon-only {
+  max-width: 20000px;
+  margin: -40px 0 20px auto; /* top right bottom left */
+  background: #9abfc7;
+  border-radius: 0px;
+  padding: 20px 0 20px 20px; /* top right bottom left -> right = 0 */
+  display: flex;
+  align-items: flex-end;
+}
+
+
+
+.header-avatar {
+  width: 55px;
+  height: 55px;
+  background: #f0f0f0;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 28px;
+  margin-left: 10px;
+}
+
+/* PROFILE CARD */
+.profile-container {
+  max-width: 1000px;
+  margin: 0 auto;
+  background: white;
+  border-radius: 30px;
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+}
+
+.profile-header-card {
+  background: #c3dada;
+  height: 150px;
+  position: relative;
+}
+
+.avatar-circle {
+  width: 130px;
+  height: 130px;
+  background: #f0f0f0;
+  border: 6px solid white;
+  border-radius: 50%;
+  position: absolute;
+  bottom: -65px;
+  left: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 65px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.edit-btn {
+  position: absolute;
+  right: 40px;
+  bottom: -25px;
+  background: rgb(192, 209, 216);
+  border: 1px solid#dfdfdf;
+  border-radius: 50px;
+  padding: 10px 25px;
+  font-weight: 700;
+  cursor: pointer;
+  display: flex;
+  gap: 8px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+}
+
+.profile-details-card {
+  padding: 90px 50px 50px;
+}
+
+.profile-details-card h2 {
+  font-size: 34px;
+  font-weight: 800;
+  margin-bottom: 35px;
+}
+
+.details-box {
+  border: 1px solid #f0f0f0;
+  border-radius: 20px;
+  padding: 35px;
+}
+
+.box-title {
+  font-size: 18px;
+  margin-bottom: 30px;
+  border-bottom: 2px solid #f8f8f8;
+  padding-bottom: 15px;
+  font-weight: 800;
+}
+
+.details-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 40px 20px;
+}
+
+.detail-item {
+  display: flex;
+  gap: 15px;
+}
+
+.detail-item label {
+  font-size: 13px;
+  color: #7ab1c4;
+  font-weight: 700;
+}
+
+.detail-item p {
+  margin: 0;
+  font-weight: 700;
+  font-size: 16px;
+}

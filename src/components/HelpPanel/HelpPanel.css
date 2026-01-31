@@ -1,0 +1,141 @@
+.help-container {
+  padding: 20px;
+  background-color: #ffffff;
+  height: 100vh;
+  overflow-y: auto;
+}
+
+.help-content-wrapper {
+  max-width: 900px; /* Limits width so it doesn't get "magulo" */
+  margin: 0 auto;
+}
+
+.help-intro-text {
+  font-size: 0.9rem;
+  margin-bottom: 10px;
+  color: #333;
+}
+
+/* TEAL SECTION */
+.help-teal-section {
+  background-color: #8fb8c3; /* Matches image_88d7a6.png */
+  border-radius: 12px;
+  padding: 20px;
+  margin-bottom: 30px;
+}
+
+.help-cards-grid {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+/* SMALL WHITE CARDS */
+.help-card {
+  background: white;
+  border-radius: 10px;
+  padding: 10px;
+  flex: 1;
+  text-align: center;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+  min-width: 120px;
+}
+
+.help-card img {
+  width: 40px; /* Keeps icons small as requested */
+  height: 40px;
+  margin-bottom: 5px;
+}
+
+.help-card h3 {
+  font-size: 0.75rem;
+  font-weight: 800;
+  margin: 2px 0;
+}
+
+.help-card p {
+  font-size: 0.6rem;
+  color: #777;
+  line-height: 1.2;
+}
+
+/* ACTIONS */
+.help-action-row {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 12px;
+}
+
+.help-contact-button {
+  background-color: #d9d9d9;
+  border: none;
+  padding: 10px 50px;
+  border-radius: 8px;
+  font-weight: 700;
+  font-size: 0.9rem;
+  cursor: pointer;
+}
+
+.help-mail-icon {
+  background: white;
+  padding: 6px 8px;
+  border-radius: 8px;
+  border: 2px solid #333;
+  display: flex;
+  align-items: center;
+}
+
+.help-mail-icon img {
+  width: 24px;
+}
+
+/* FAQ STYLING */
+.faq-title {
+  font-size: 1.4rem;
+  font-weight: 800;
+  margin-bottom: 15px;
+}
+
+.faq-search-container {
+  background-color: #f1f1f1; /* Grey background from reference */
+  padding: 15px;
+  border-radius: 12px;
+  margin-bottom: 20px;
+}
+
+.faq-search-bar {
+  background: white;
+  display: flex;
+  align-items: center;
+  padding: 8px 15px;
+  border-radius: 8px;
+}
+
+.faq-search-bar input {
+  border: none;
+  outline: none;
+  width: 100%;
+  margin-left: 10px;
+  font-size: 0.85rem;
+  color: #888;
+}
+
+.faq-questions-grid {
+  display: flex;
+  gap: 40px;
+}
+
+.faq-column p {
+  font-size: 0.85rem;
+  font-weight: 700;
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+}
+
+.faq-column p span {
+  color: #5bb2d9; /* Blue arrow from reference */
+  margin-right: 10px;
+}
