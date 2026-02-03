@@ -1,6 +1,7 @@
 // LoginPanel.jsx
 import React, { useState } from "react";
 import axios from "axios";
+import API from "../../services/api";
 import { FiEye, FiEyeOff } from "react-icons/fi";
 import { useNavigate } from "react-router-dom";
 import "./LogInPanel.css";
@@ -13,6 +14,7 @@ const LoginPanel = () => {
   const [loginNumber, setLoginNumber] = useState("");
   const [loginPassword, setLoginPassword] = useState("");
   const [loginError, setLoginError] = useState("");
+  const [loginSuccess, setLoginSuccess] = useState("");
   const [showLoginPassword, setShowLoginPassword] = useState(false);
   const [loginLoading, setLoginLoading] = useState(false);
 
@@ -30,22 +32,22 @@ const LoginPanel = () => {
     setLoginError("");
     setLoginLoading(true);
 
-    try {
-      const response = await axios.post("http://localhost:8082/api/login", {
-        number: loginNumber,
-        password: loginPassword,
-      });
+    // Check against registered details in localStorage
+    const storedNumber = localStorage.getItem("registerNumber");
+    const storedPassword = localStorage.getItem("registerPassword");
+    const storedUserId = localStorage.getItem("userId");
 
-      const { token } = response.data;
-      localStorage.setItem("token", token);
-
-      // Navigate to profile/home page
-      navigate("/home");
-    } catch {
+    if (loginNumber === storedNumber && loginPassword === storedPassword) {
+      // Login successful
+      localStorage.setItem("userId", storedUserId);
+      setLoginSuccess('Logged in successfully');
+      // Small delay so user sees feedback, then navigate
+      setTimeout(() => navigate("/profile"), 250);
+    } else {
       setLoginError("Invalid number or password");
-    } finally {
-      setLoginLoading(false);
     }
+
+    setLoginLoading(false);
   };
 
   // REGISTER SUBMIT
@@ -54,25 +56,19 @@ const LoginPanel = () => {
     setRegisterError("");
     setRegisterLoading(true);
 
-    try {
-      const response = await axios.post("http://localhost:8082/api/register", {
-        name: registerName,
-        number: registerNumber,
-        password: registerPassword,
-      });
+    // Generate a simple userId
+    const userId = `user-${Date.now()}`;
 
-      if (response.data?.userId) {
-        localStorage.setItem("userId", response.data.userId);
-        localStorage.setItem("registerName", registerName);
-        localStorage.setItem("registerNumber", registerNumber);
-      }
+    // Save details to localStorage
+    localStorage.setItem("userId", userId);
+    localStorage.setItem("registerName", registerName);
+    localStorage.setItem("registerNumber", registerNumber);
+    localStorage.setItem("registerPassword", registerPassword);
 
-      navigate("/account"); // SPA-friendly redirect
-    } catch {
-      setRegisterError("Registration failed");
-    } finally {
-      setRegisterLoading(false);
-    }
+    // Navigate to create account panel
+    navigate("/account");
+
+    setRegisterLoading(false);
   };
 
   return (
@@ -151,6 +147,7 @@ const LoginPanel = () => {
               </span>
             </div>
             {loginError && <p className="error">{loginError}</p>}
+            {loginSuccess && <p className="success">{loginSuccess}</p>}
             <button type="submit" disabled={loginLoading}>
               {loginLoading ? "Logging In..." : "Log In"}
             </button>

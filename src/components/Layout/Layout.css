@@ -1,0 +1,49 @@
+html, body, #root { background: #ffffff; margin: 0; padding: 0; }
+
+.main-content {
+  margin-left: 250px; /* offset for fixed sidebar */
+  /* remove extra top spacing so content sits flush with top */
+  padding: 0 0 40px 24px; /* top right bottom left */
+  background: #ffffff; /* ensure content area has white background */
+  box-sizing: border-box;
+  min-height: 100vh;
+}
+
+.main-content-inner {
+  max-width: 1300px; /* allow content/frame to take more horizontal space */
+  margin: 0 auto;
+  width: 100%;
+}
+
+.main-content-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+/* small screens: reduce left margin */
+@media (max-width: 1200px) {
+  /* Remove top padding on medium screens so content sits at the top */
+  .main-content { padding-top: 0; }
+}
+
+@media (max-width: 900px) {
+  /* When using the hamburger menu on small-to-medium screens, remove the left offset
+     so the main content centers correctly and doesn't leave a large empty gap. */
+  .main-content { margin-left: 0; padding: 12px 0 20px 16px; }
+}
+
+@media (max-width: 600px) {
+  .main-content { margin-left: 0; padding: 16px 0 16px 0; }
+  .sidebar { position: relative; height: auto; width: 100%; }
+}
+
+/* Responsive inner container tweaks */
+@media (max-width: 900px) {
+  .main-content-inner { padding: 0 12px; max-width: 1000px; }
+}
+
+@media (max-width: 600px) {
+  .main-content-inner { padding: 0 8px; max-width: 100%; }
+  .main-content { padding: 12px 0; }
+}

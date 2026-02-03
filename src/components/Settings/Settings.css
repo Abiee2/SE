@@ -4,6 +4,7 @@
   display: flex;
   flex-direction: column;
   gap: 25px;
+  padding: 40px 0px 0px
 }
 
 .settings-card {
@@ -62,6 +63,12 @@
   background: #f0f0f0;
 }
 
+.size-btns button.active {
+  background: #6495AB;
+  color: white;
+  border-color: #6495AB;
+}
+
 .pill-switch {
   width: 52px;
   height: 28px;
@@ -88,7 +95,39 @@
   transition: 0.3s;
 }
 
-.pill-switch.on::before {
+.pill-switch.on::before { 
   transform: translateX(24px);
 }
 
+.save-section {
+  margin-top: 20px;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+}
+
+.save-section button {
+  padding: 8px 16px;
+  font-size: 16px;
+  font-weight: 1000;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  background: #9abfc7;
+  color: white;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  transition: all 0.2s ease;
+  margin-bottom: 40px;
+}
+
+.save-section button:hover {
+  background: #7a9fa7;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+}
+
+.message {
+  margin-top: 10px;
+  font-size: 14px;
+  color: #666;
+}

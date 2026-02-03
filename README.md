@@ -118,6 +118,9 @@ REACT_APP_API_URL=http://localhost:8000
 REACT_APP_ENVIRONMENT=development
 ---
 
+> Note: The development `docker-compose.yml` now includes a `php-backend` service and the `react-dev` service sets `REACT_APP_API_URL=http://php-backend:5000` so the frontend will target the PHP backend when started with `docker-compose up`.
+
+
 ### Nginx Configuration
 Edit `nginx.conf` for custom server settings, caching rules, or proxy configurations.
 

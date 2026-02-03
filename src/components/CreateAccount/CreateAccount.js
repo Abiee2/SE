@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
+import { useNavigate } from "react-router-dom";
+import API from "../../services/api";
 import "./CreateAccount.css";
 
 const CreateAccount = () => {
+  const navigate = useNavigate();
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [address, setAddress] = useState("");
@@ -18,9 +20,18 @@ const CreateAccount = () => {
   useEffect(() => {
     const savedName = localStorage.getItem("registerName");
     const savedNumber = localStorage.getItem("registerNumber");
+    const savedPassword = localStorage.getItem("registerPassword");
     if (savedName) setFirstName(savedName);
     if (savedNumber) setNumber(savedNumber);
+    if (savedPassword) setPassword(savedPassword);
   }, []);
+
+  // Navigate to login after successful profile save
+  useEffect(() => {
+    if (success) {
+      navigate("/login");
+    }
+  }, [success, navigate]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -34,20 +45,17 @@ const CreateAccount = () => {
 
     setLoading(true);
 
-    try {
-      await axios.post("http://localhost:8082/api/profile", {
-        firstName,
-        lastName,
-        address,
-        number,
-        password
-      });
-      setSuccess("Profile saved successfully! 🎉");
-    } catch {
-      setError("Failed to save profile");
-    } finally {
+    const userId = localStorage.getItem('userId');
+    if (!userId) {
+      setError('No user account found. Please register or login first.');
       setLoading(false);
+      return;
     }
+
+    const settings = { firstName, lastName, address, number, password };
+    localStorage.setItem("profile", JSON.stringify({ userId, settings }));
+    setSuccess("Profile saved successfully! 🎉");
+    setLoading(false);
   };
 
   const handleCheckboxClick = () => setShowPrivacyModal(true);
@@ -59,6 +67,17 @@ const CreateAccount = () => {
     setAgreeTerms(false);
     setShowPrivacyModal(false);
   };
+
+  if (loading) {
+    return (
+      <div className="create-container">
+        <div className="loading-container">
+          <div className="loading-spinner"></div>
+          Saving profile...
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="create-container">
