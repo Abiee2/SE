@@ -344,3 +344,32 @@ input:checked + .slider:before {
   margin-top: 8px;
   text-align: center;
 }
+
+@media (max-width: 700px) {
+  .container { width: 100%; min-height: 520px; border-radius: 18px; }
+  .container form { padding: 0 20px; }
+  .logo img { height: 56px; }
+  .toggle-container { border-radius: 120px 0 0 120px; }
+}
+
+@media (max-width: 420px) {
+  .container { padding: 12px; }
+  .container button { padding: 12px 28px; font-size: 13px; }
+  .logo img { height: 48px; }
+}
+
+/* Responsive for smaller screens */
+@media (max-width: 900px) {
+  .container { width: 92%; min-height: 420px; }
+  .container form { padding: 0 24px; }
+  .container button { padding: 12px 30px; }
+}
+
+@media (max-width: 480px) {
+  .login-panel-wrapper { padding: 12px; }
+  .container { width: 100%; min-height: 380px; border-radius: 18px; }
+  .toggle-container { display: none; }
+  .container form { padding: 16px; }
+  .container button { width: 100%; padding: 12px; font-size: 16px; }
+  .logo img { height: 60px; }
+}

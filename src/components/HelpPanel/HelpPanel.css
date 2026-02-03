@@ -1,0 +1,185 @@
+.help-container {
+  padding: 10px;
+  background-color: #ffffff;
+  height: 100vh;
+  overflow-y: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: 280px;
+}
+
+.help-content-wrapper {
+  max-width: 900px; /* Limits width so it doesn't get "magulo" */
+  width: 100%;
+}
+
+.help-intro-text {
+  font-size: 1rem;
+  margin-bottom: 10px;
+  color: #333;
+}
+
+/* TEAL SECTION */
+.help-teal-section {
+  background-color: #8fb8c3; /* Matches image_88d7a6.png */
+  border-radius: 12px;
+  padding: 20px;
+  margin-bottom: 30px;
+}
+
+.help-cards-grid {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+}
+
+@media (max-width: 700px) {
+  .help-cards-grid { flex-direction: column; gap: 12px; }
+  .help-action-row { justify-content: center; }
+  .help-contact-button { padding: 10px 24px; }
+  .help-content-wrapper { padding: 0 12px; }
+  .help-card { min-width: auto; }
+  .faq-questions-grid { flex-direction: column; gap: 12px; }
+}
+
+/* SMALL WHITE CARDS */
+.help-card {
+  background: white;
+  border-radius: 10px;
+  padding: 10px;
+  flex: 1;
+  text-align: center;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+  min-width: 120px;
+}
+
+.help-card img {
+  width: 40px; /* Keeps icons small as requested */
+  height: 40px;
+  margin-bottom: 5px;
+}
+
+.help-card h3 {
+  font-size: 0.9rem;
+  font-weight: 800;
+  margin: 2px 0;
+}
+
+.help-card p {
+  font-size: 0.7rem;
+  color: #777;
+  line-height: 1.2;
+}
+
+/* ACTIONS */
+.help-action-row {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 12px;
+}
+
+.help-contact-button {
+  background-color: #d9d9d9;
+  border: none;
+  padding: 10px 50px;
+  border-radius: 8px;
+  font-weight: 700;
+  font-size: 0.9rem;
+  cursor: pointer;
+}
+
+.help-mail-icon {
+  background: white;
+  padding: 6px 8px;
+  border-radius: 8px;
+  border: 2px solid #333;
+  display: flex;
+  align-items: center;
+}
+
+.help-mail-icon img {
+  width: 24px;
+}
+
+/* FAQ STYLING */
+.faq-title {
+  font-size: 1.6rem;
+  font-weight: 800;
+  margin-bottom: 15px;
+}
+
+.faq-search-container {
+  background-color: #f1f1f1; /* Grey background from reference */
+  padding: 15px;
+  border-radius: 12px;
+  margin-bottom: 20px;
+}
+
+.faq-search-bar {
+  background: white;
+  display: flex;
+  align-items: center;
+  padding: 8px 15px;
+  border-radius: 8px;
+}
+
+.faq-search-bar input {
+  border: none;
+  outline: none;
+  width: 100%;
+  margin-left: 10px;
+  font-size: 0.85rem;
+  color: #888;
+}
+
+.faq-questions-grid {
+  display: flex;
+  gap: 40px;
+}
+
+.faq-column p {
+  font-size: 1rem;
+  font-weight: 700;
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+}
+
+.faq-column p span {
+  color: #5bb2d9; /* Blue arrow from reference */
+  margin-right: 10px;
+}
+
+.faq-item {
+  margin-bottom: 12px;
+}
+
+.faq-answer {
+  margin-top: 8px;
+  padding: 10px;
+  background-color: #f9f9f9;
+  border-left: 4px solid #5bb2d9;
+  font-size: 1rem;
+  line-height: 1.4;
+  color: #555;
+}
+
+/* Help responsive tweaks */
+@media (max-width: 900px) {
+  .help-cards-grid { flex-direction: column; gap: 12px; }
+  .help-action-row { justify-content: center; }
+  .help-contact-button { padding: 10px 30px; }
+  .help-content-wrapper { padding: 0 12px; max-width: 95%; }
+  .faq-questions-grid { flex-direction: column; gap: 12px; }
+}
+
+@media (max-width: 480px) {
+  .help-card h3 { font-size: 0.7rem; }
+  .help-card p { font-size: 0.65rem; }
+  .help-card img { width: 36px; height: 36px; }
+  .help-intro-text { font-size: 0.85rem; }
+}

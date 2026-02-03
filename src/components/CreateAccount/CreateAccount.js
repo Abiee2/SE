@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
+import { useNavigate } from "react-router-dom";
+import API from "../../services/api";
 import "./CreateAccount.css";
 
 const CreateAccount = () => {
+  const navigate = useNavigate();
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [address, setAddress] = useState("");
@@ -22,6 +24,13 @@ const CreateAccount = () => {
     if (savedNumber) setNumber(savedNumber);
   }, []);
 
+  // Navigate to login after successful profile save
+  useEffect(() => {
+    if (success) {
+      setTimeout(() => navigate("/login"), 2000);
+    }
+  }, [success, navigate]);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError("");
@@ -35,15 +44,18 @@ const CreateAccount = () => {
     setLoading(true);
 
     try {
-      await axios.post("http://localhost:8082/api/profile", {
-        firstName,
-        lastName,
-        address,
-        number,
-        password
-      });
+      const userId = localStorage.getItem('userId');
+      if (!userId) {
+        setError('No user account found. Please register or login first.');
+        setLoading(false);
+        return;
+      }
+
+      const settings = { firstName, lastName, address, number };
+      await API.post(`/profile`, { userId, settings });
       setSuccess("Profile saved successfully! 🎉");
-    } catch {
+    } catch (err) {
+      console.error(err?.response?.data || err);
       setError("Failed to save profile");
     } finally {
       setLoading(false);

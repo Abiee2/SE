@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import API from '../../services/api';
 import './Settings.css';
 
 const Settings = () => {
@@ -12,9 +13,52 @@ const Settings = () => {
     visualAlerts: true,
     quietHours: false,
   });
+  const [textSize, setTextSize] = useState('Medium');
+  const [loading, setLoading] = useState(false);
+  const [message, setMessage] = useState('');
+
+  useEffect(() => {
+    const loadSettings = async () => {
+      const userId = localStorage.getItem('userId');
+      if (!userId) return;
+
+      try {
+        const response = await API.get(`/profile/${userId}`);
+        if (response.data.settings) {
+          setToggles(response.data.settings.toggles || toggles);
+          setTextSize(response.data.settings.textSize || 'Medium');
+        }
+      } catch (err) {
+        console.error('Failed to load settings:', err);
+      }
+    };
+
+    loadSettings();
+  }, []);
 
   const handleToggle = (key) => {
     setToggles({ ...toggles, [key]: !toggles[key] });
+  };
+
+  const handleSave = async () => {
+    setLoading(true);
+    setMessage('');
+    const userId = localStorage.getItem('userId');
+    if (!userId) {
+      setMessage('No user logged in');
+      setLoading(false);
+      return;
+    }
+
+    try {
+      await API.put(`/profile/${userId}`, { toggles, textSize });
+      setMessage('Settings saved successfully!');
+    } catch (err) {
+      console.error('Failed to save settings:', err);
+      setMessage('Failed to save settings');
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -28,10 +72,10 @@ const Settings = () => {
           <div className="setting-row">
             <span>Text Size</span>
             <div className="size-btns">
-              <button>Small</button>
-              <button>Medium</button>
-              <button>Large</button>
-              <button>Extra Large</button>
+              <button className={textSize === 'Small' ? 'active' : ''} onClick={() => setTextSize('Small')}>Small</button>
+              <button className={textSize === 'Medium' ? 'active' : ''} onClick={() => setTextSize('Medium')}>Medium</button>
+              <button className={textSize === 'Large' ? 'active' : ''} onClick={() => setTextSize('Large')}>Large</button>
+              <button className={textSize === 'Extra Large' ? 'active' : ''} onClick={() => setTextSize('Extra Large')}>Extra Large</button>
             </div>
             <div
               className={`pill-switch ${toggles.textSize ? 'on' : ''}`}
@@ -110,6 +154,13 @@ const Settings = () => {
             />
           </div>
         </section>
+
+        <div className="save-section">
+          <button onClick={handleSave} disabled={loading}>
+            {loading ? 'Saving...' : 'Save Settings'}
+          </button>
+          {message && <p className="message">{message}</p>}
+        </div>
 
       </div>
     </div>
