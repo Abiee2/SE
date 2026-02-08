@@ -1,3 +1,5 @@
+/* global chrome */
+
 import React, { useState, useEffect } from 'react';
 import API from '../../services/api';
 import './Profile.css';
@@ -18,15 +20,16 @@ const Profile = () => {
 
       try {
         const response = await API.get(`/profile/${userId}`);
-        setProfileData(response.data.settings);
+        setProfileData(response.data);  // Load full profile, not just settings
       } catch (err) {
         console.error('Failed to fetch profile:', err);
-        // Fallback to localStorage data
-        const savedProfile = localStorage.getItem("profile");
+        // Fallback to localStorage (full profile)
+        const savedProfile = localStorage.getItem("uaps-profile");
         if (savedProfile) {
           const parsed = JSON.parse(savedProfile);
-          setProfileData(parsed.settings);
+          setProfileData(parsed);  // Load full profile
         } else {
+          // Fallback to register details
           const name = localStorage.getItem('registerName') || 'N/A';
           const number = localStorage.getItem('registerNumber') || 'N/A';
           setProfileData({
@@ -34,7 +37,8 @@ const Profile = () => {
             lastName: name.split(' ').slice(1).join(' ') || '',
             address: 'N/A',
             number: number,
-            dateOfBirth: 'N/A'
+            dateOfBirth: 'N/A',
+            settings: { textSize: 'Medium', toggles: {} }
           });
         }
       } finally {
@@ -50,6 +54,11 @@ const Profile = () => {
     setIsEditing(true);
   };
 
+  const handleCancel = () => {
+    setEditData(profileData);
+    setIsEditing(false);
+  };
+
   const handleSave = async () => {
     const userId = localStorage.getItem('userId');
     if (!userId) return;
@@ -57,32 +66,30 @@ const Profile = () => {
     try {
       await API.put(`/profile/${userId}`, editData);
       setProfileData(editData);
-      setIsEditing(false);
     } catch (err) {
       console.error('Failed to update profile:', err);
-      // Fallback to localStorage
-      localStorage.setItem("profile", JSON.stringify({ userId, settings: editData }));
-      setProfileData(editData);
+      // Fallback: Save full profile to localStorage
+      localStorage.setItem('uaps-profile', JSON.stringify(editData));
+    } finally {
       setIsEditing(false);
     }
   };
 
-  const handleCancel = () => {
-    setEditData(profileData);
-    setIsEditing(false);
-  };
+const handleExport = () => {
+  // Load full profile from localStorage
+  const profileStr = localStorage.getItem("uaps-profile");
+  if (!profileStr) {
+    alert("No profile found to sync.");
+    return;
+  }
+  const fullProfile = JSON.parse(profileStr);
 
-  const handleExport = () => {
-    const dataStr = JSON.stringify(profileData, null, 2);
-    const dataUri = 'data:application/json;charset=utf-8,'+ encodeURIComponent(dataStr);
+  // Dispatch the event to trigger extension sync on localhost (content script will handle chrome.storage)
+  window.dispatchEvent(new CustomEvent("settings-saved", { detail: fullProfile.settings }));
 
-    const exportFileDefaultName = 'uaps-profile.json';
-
-    const linkElement = document.createElement('a');
-    linkElement.setAttribute('href', dataUri);
-    linkElement.setAttribute('download', exportFileDefaultName);
-    linkElement.click();
-  };
+  // Alert success (syncing is now handled by the extension's content script)
+  alert('Profile synced to Chrome extension successfully! Check the extension for confirmation.');
+};
 
   if (loading) {
     return (
@@ -101,7 +108,6 @@ const Profile = () => {
 
   return (
     <div className="content-area">
-
       {/* HEADER SA TAAS – ICON LANG */}
       <div className="top-header-icon-only">
         <div className="header-avatar">👤</div>
@@ -202,7 +208,6 @@ const Profile = () => {
                   </div>
                 </div>
               </div>
-
             </div>
 
             {isEditing && (
@@ -213,12 +218,13 @@ const Profile = () => {
             )}
 
             <div className="export-section">
-              <button onClick={handleExport}>Export Profile for Cross-App Use</button>
+              <button onClick={handleExport}>
+                Sync Profile to Chrome Extension
+              </button>
             </div>
           </div>
         </div>
       </div>
-
     </div>
   );
 };

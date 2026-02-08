@@ -33,30 +33,64 @@ const CreateAccount = () => {
     }
   }, [success, navigate]);
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setError("");
-    setSuccess("");
+  // const handleSubmit = (e) => {
+  //   e.preventDefault();
 
-    if (!agreeTerms) {
-      setError("You must agree to the Terms of Service & Privacy Policy");
-      return;
+  //   const profileData = {
+  //     settings: {
+  //       firstName,
+  //       lastName,
+  //       number,
+  //       address,
+  //       dateOfBirth: "", // optional
+  //       textSize: "Medium",
+  //       highContrast: false,
+  //       dyslexiaFont: false
+  //     }
+  //   };
+
+  //   localStorage.setItem("uaps-profile", JSON.stringify(profileData));
+  //   setSuccess("Profile saved successfully! Please log in."); // optional message
+  //   navigate("/login"); // ✅ send user to Login
+
+  // };
+
+
+  const handleSubmit = (e) => {
+  e.preventDefault();
+
+  // Load existing profile or create new
+  const existingProfileStr = localStorage.getItem("uaps-profile");
+  const existingProfile = existingProfileStr ? JSON.parse(existingProfileStr) : { settings: {} };
+
+  const profileData = {
+    settings: {
+      firstName,
+      lastName,
+      number,
+      address,
+      dateOfBirth: "", // optional
+      textSize: existingProfile.settings?.textSize || "Medium",
+      highContrast: false,
+      dyslexiaFont: false,
+      toggles: existingProfile.settings?.toggles || {
+        readableFont: false,
+        simpleMode: false,
+        zoom: true,
+        sound: true,
+        captions: true,
+        visualAlerts: true,
+        quietHours: false
+      }
     }
-
-    setLoading(true);
-
-    const userId = localStorage.getItem('userId');
-    if (!userId) {
-      setError('No user account found. Please register or login first.');
-      setLoading(false);
-      return;
-    }
-
-    const settings = { firstName, lastName, address, number, password };
-    localStorage.setItem("profile", JSON.stringify({ userId, settings }));
-    setSuccess("Profile saved successfully! 🎉");
-    setLoading(false);
   };
+
+  localStorage.setItem("uaps-profile", JSON.stringify(profileData));
+  setSuccess("Profile saved successfully! Please log in.");
+  navigate("/login");
+};
+
+
 
   const handleCheckboxClick = () => setShowPrivacyModal(true);
   const handleAgree = () => {

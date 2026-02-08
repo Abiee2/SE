@@ -3,33 +3,43 @@ import API from '../../services/api';
 import './Settings.css';
 
 const Settings = () => {
-  const [toggles, setToggles] = useState({
-    textSize: true,
-    zoom: true,
-    readableFont: true,
-    sound: true,
-    captions: true,
-    simpleMode: false,
-    visualAlerts: true,
-    quietHours: false,
-  });
-  const [textSize, setTextSize] = useState('Medium');
-  const [loading, setLoading] = useState(false);
+  const [toggles, setToggles] = useState(null);
+  const [textSize, setTextSize] = useState(null);
+  const [loading, setLoading] = useState(true); // Loading indicator
   const [message, setMessage] = useState('');
 
+  // Load settings: preview first, then API fallback
   useEffect(() => {
     const loadSettings = async () => {
-      const userId = localStorage.getItem('userId');
-      if (!userId) return;
+      setLoading(true);
 
       try {
-        const response = await API.get(`/profile/${userId}`);
-        if (response.data.settings) {
-          setToggles(response.data.settings.toggles || toggles);
-          setTextSize(response.data.settings.textSize || 'Medium');
+        // Check for preview first
+        const savedPreview = localStorage.getItem('uaps-preview');
+        if (savedPreview) {
+          const parsed = JSON.parse(savedPreview);
+          if (parsed?.settings) {
+            setToggles(parsed.settings.toggles ?? {});
+            setTextSize(parsed.settings.textSize ?? 'Medium');
+            setLoading(false);
+            return;
+          }
         }
+
+        // Fallback: load from API
+        const userId = localStorage.getItem('userId');
+        if (!userId) return;
+
+        const response = await API.get(`/profile/${userId}`);
+        const settings = response.data.settings || {};
+        setToggles(settings.toggles ?? {});
+        setTextSize(settings.textSize ?? 'Medium');
       } catch (err) {
         console.error('Failed to load settings:', err);
+        setToggles({});
+        setTextSize('Medium');
+      } finally {
+        setLoading(false);
       }
     };
 
@@ -40,26 +50,29 @@ const Settings = () => {
     setToggles({ ...toggles, [key]: !toggles[key] });
   };
 
-  const handleSave = async () => {
-    setLoading(true);
-    setMessage('');
-    const userId = localStorage.getItem('userId');
-    if (!userId) {
-      setMessage('No user logged in');
-      setLoading(false);
-      return;
-    }
 
-    try {
-      await API.put(`/profile/${userId}`, { toggles, textSize });
-      setMessage('Settings saved successfully!');
-    } catch (err) {
-      console.error('Failed to save settings:', err);
-      setMessage('Failed to save settings');
-    } finally {
-      setLoading(false);
-    }
+  const handleSave = () => {
+    if (!toggles || !textSize) return;
+
+    const previewPayload = { textSize, toggles };
+
+    // Save preview so Settings remembers it
+    localStorage.setItem('uaps-preview', JSON.stringify({ settings: previewPayload }));
+
+    // Trigger preview update
+    window.dispatchEvent(new CustomEvent("preview-updated", { detail: { textSize, toggles } }));
+
+    console.log("Settings saved to localStorage:", previewPayload);  // Add this for debugging
+    setMessage('Preview updated. Review changes before applying.');
   };
+
+  if (loading) {
+    return (
+      <div className="content-area">
+        <p className="loading-message">Loading settings...</p>
+      </div>
+    );
+  }
 
   return (
     <div className="content-area">
@@ -72,10 +85,15 @@ const Settings = () => {
           <div className="setting-row">
             <span>Text Size</span>
             <div className="size-btns">
-              <button className={textSize === 'Small' ? 'active' : ''} onClick={() => setTextSize('Small')}>Small</button>
-              <button className={textSize === 'Medium' ? 'active' : ''} onClick={() => setTextSize('Medium')}>Medium</button>
-              <button className={textSize === 'Large' ? 'active' : ''} onClick={() => setTextSize('Large')}>Large</button>
-              <button className={textSize === 'Extra Large' ? 'active' : ''} onClick={() => setTextSize('Extra Large')}>Extra Large</button>
+              {['Small', 'Medium', 'Large', 'Extra Large'].map((size) => (
+                <button
+                  key={size}
+                  className={textSize === size ? 'active' : ''}
+                  onClick={() => setTextSize(size)}
+                >
+                  {size}
+                </button>
+              ))}
             </div>
             <div
               className={`pill-switch ${toggles.textSize ? 'on' : ''}`}
@@ -156,8 +174,8 @@ const Settings = () => {
         </section>
 
         <div className="save-section">
-          <button onClick={handleSave} disabled={loading}>
-            {loading ? 'Saving...' : 'Save Settings'}
+          <button onClick={handleSave}>
+            Save & Preview
           </button>
           {message && <p className="message">{message}</p>}
         </div>

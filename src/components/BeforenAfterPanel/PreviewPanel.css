@@ -1,3 +1,30 @@
+/* TEXT SIZE CLASSES */
+.text-size-small { font-size: 14px; }
+.text-size-medium { font-size: 16px; }
+.text-size-large { font-size: 70px; }
+
+
+/* READABLE FONT */
+.readable-font { font-family: Arial, Helvetica, sans-serif; }
+
+/* SIMPLE MODE */
+.simple-mode .nav-card,
+.simple-mode .feature-item,
+.simple-mode .apps-inventory,
+.simple-mode .top-banner {
+  border-radius: 10px;
+  box-shadow: none;
+  background-color: #7699aabd;
+}
+
+/* Make hero simpler in simple-mode */
+.simple-mode .simplified-hero {
+  background-color: #e0f0f5;
+  color: #333;
+}
+
+
+
 /* --- Global Wrapper --- */
 .preview-page-wrapper {
   display: flex;
@@ -356,3 +383,5 @@
   font-weight: 700;
   text-align: center;
 }
+
+

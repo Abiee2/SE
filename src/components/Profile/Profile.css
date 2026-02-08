@@ -25,8 +25,9 @@
 
 /* PROFILE CARD */
 .profile-frame {
-  max-width: 1200px; /* wider to reduce visible right-side gap */
-  margin: 0 10px 30px; /* remove top margin so header sits flush */
+  max-width: 1400px; /* wider to reduce visible right-side gap */
+  margin-left: 100px;
+  /* margin: 0 10px 50px; remove top margin so header sits flush */
   padding: 8px 6px 6px; /* modest top padding */
   background: transparent; /* removed teal border to match prototype */
   border-radius: 28px;

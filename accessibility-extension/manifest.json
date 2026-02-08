@@ -1,0 +1,20 @@
+{
+  "manifest_version": 3,
+  "name": "UAPS Accessibility Bridge",
+  "version": "1.0",
+  "description": "Applies UAPS accessibility settings to all websites",
+  "permissions": ["storage", "activeTab", "scripting"],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "action": {
+    "default_popup": "popup.html"
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://*.wikipedia.org/*", "*:http://localhost:3000/*"],
+      "js": ["content.js"],
+      "run_at": "document_start"
+    }
+  ]
+}

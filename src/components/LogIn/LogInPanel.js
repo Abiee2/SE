@@ -1,22 +1,24 @@
+
 // LoginPanel.jsx
 import React, { useState } from "react";
 import axios from "axios";
-import API from "../../services/api";
 import { FiEye, FiEyeOff } from "react-icons/fi";
 import { useNavigate } from "react-router-dom";
 import "./LogInPanel.css";
+
 
 const LoginPanel = () => {
   const navigate = useNavigate();
   const [isActive, setIsActive] = useState(false);
 
+
   // LOGIN
   const [loginNumber, setLoginNumber] = useState("");
   const [loginPassword, setLoginPassword] = useState("");
   const [loginError, setLoginError] = useState("");
-  const [loginSuccess, setLoginSuccess] = useState("");
   const [showLoginPassword, setShowLoginPassword] = useState(false);
   const [loginLoading, setLoginLoading] = useState(false);
+
 
   // REGISTER
   const [registerName, setRegisterName] = useState("");
@@ -26,50 +28,106 @@ const LoginPanel = () => {
   const [registerError, setRegisterError] = useState("");
   const [registerLoading, setRegisterLoading] = useState(false);
 
-  // LOGIN SUBMIT
-  const handleLoginSubmit = async (e) => {
-    e.preventDefault(); // <- Prevents page reload
-    setLoginError("");
-    setLoginLoading(true);
 
-    // Check against registered details in localStorage
-    const storedNumber = localStorage.getItem("registerNumber");
-    const storedPassword = localStorage.getItem("registerPassword");
-    const storedUserId = localStorage.getItem("userId");
 
-    if (loginNumber === storedNumber && loginPassword === storedPassword) {
-      // Login successful
-      localStorage.setItem("userId", storedUserId);
-      setLoginSuccess('Logged in successfully');
-      // Small delay so user sees feedback, then navigate
-      setTimeout(() => navigate("/profile"), 250);
-    } else {
-      setLoginError("Invalid number or password");
-    }
+// LOGIN SUBMIT
+const handleLoginSubmit = async (e) => {
+  e.preventDefault();
+  setLoginError("");
+  setLoginLoading(true);
 
+  try {
+    const response = await axios.post("http://localhost:8082/api/login", {
+      number: loginNumber,
+      password: loginPassword,
+    });
+
+    const { token } = response.data;
+    localStorage.setItem("token", token);
+
+    // Load existing profile or create default
+    const existingProfileStr = localStorage.getItem("uaps-profile");
+    const existingProfile = existingProfileStr ? JSON.parse(existingProfileStr) : { settings: {} };
+
+    // Ensure consistent structure
+    const updatedProfile = {
+      settings: {
+        firstName: existingProfile.settings?.firstName || "",
+        lastName: existingProfile.settings?.lastName || "",
+        number: loginNumber || existingProfile.settings?.number || "",
+        address: existingProfile.settings?.address || "",
+        textSize: existingProfile.settings?.textSize || "Medium",
+        toggles: existingProfile.settings?.toggles || {
+          readableFont: false,
+          simpleMode: false,
+          zoom: true,
+          sound: true,
+          captions: true,
+          visualAlerts: true,
+          quietHours: false
+        }
+      }
+    };
+
+    localStorage.setItem("uaps-profile", JSON.stringify(updatedProfile));
+
+    navigate("/home");
+  } catch (error) {
+    setLoginError(error.response?.data?.message || "Invalid number or password");
+  } finally {
     setLoginLoading(false);
-  };
+  }
+};
 
-  // REGISTER SUBMIT
-  const handleRegisterSubmit = async (e) => {
-    e.preventDefault();
-    setRegisterError("");
-    setRegisterLoading(true);
+// REGISTER SUBMIT (already good, but ensure it saves consistently)
+const handleRegisterSubmit = async (e) => {
+  e.preventDefault();
+  setRegisterError("");
+  setRegisterLoading(true);
 
-    // Generate a simple userId
-    const userId = `user-${Date.now()}`;
+  try {
+    const regRes = await axios.post("http://localhost:8082/api/register", {
+      name: registerName,
+      number: registerNumber,
+      password: registerPassword,
+    });
 
-    // Save details to localStorage
-    localStorage.setItem("userId", userId);
+    const { userId } = regRes.data;
     localStorage.setItem("registerName", registerName);
     localStorage.setItem("registerNumber", registerNumber);
-    localStorage.setItem("registerPassword", registerPassword);
+    localStorage.setItem("userId", userId);
 
-    // Navigate to create account panel
+    // Create initial profile with user details
+    const initialProfile = {
+      settings: {
+        firstName: registerName.split(' ')[0] || registerName,
+        lastName: registerName.split(' ').slice(1).join(' ') || "",
+        number: registerNumber,
+        address: "",
+        textSize: "Medium",
+        toggles: {
+          readableFont: false,
+          simpleMode: false,
+          zoom: true,
+          sound: true,
+          captions: true,
+          visualAlerts: true,
+          quietHours: false
+        }
+      }
+    };
+
+    localStorage.setItem("uaps-profile", JSON.stringify(initialProfile));
+
     navigate("/account");
-
+  } catch (error) {
+    setRegisterError(error.response?.data?.error || "Registration failed");
+  } finally {
     setRegisterLoading(false);
-  };
+  }
+};
+
+
 
   return (
     <div className="login-panel-wrapper blue-theme">
@@ -111,11 +169,15 @@ const LoginPanel = () => {
               </span>
             </div>
             {registerError && <p className="error">{registerError}</p>}
-            <button type="submit" disabled={registerLoading}>
+            <button
+            className="hidden"
+              onClick={() => navigate("/account")} // redirect directly
+            type="submit" disabled={registerLoading}>
               {registerLoading ? "Registering..." : "Register"}
             </button>
           </form>
         </div>
+
 
         {/* LOGIN */}
         <div className="form-container sign-in">
@@ -147,12 +209,15 @@ const LoginPanel = () => {
               </span>
             </div>
             {loginError && <p className="error">{loginError}</p>}
-            {loginSuccess && <p className="success">{loginSuccess}</p>}
-            <button type="submit" disabled={loginLoading}>
+            <button
+            className="hidden"
+              onClick={() => navigate("/home")} // redirect directly
+            type="submit" disabled={loginLoading}>
               {loginLoading ? "Logging In..." : "Log In"}
             </button>
           </form>
         </div>
+
 
         {/* TOGGLE PANEL */}
         <div className="toggle-container">
@@ -177,5 +242,6 @@ const LoginPanel = () => {
     </div>
   );
 };
+
 
 export default LoginPanel;

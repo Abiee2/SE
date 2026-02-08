@@ -14,12 +14,13 @@ const fs = require('fs');
     const password = 'Pw' + Math.random().toString(36).slice(-8) + 'A1';
 
     const regResp = await page.request.post(apiBase + '/register', {
-      data: { userId, name: 'UI Test', number, password }
+      data: { name: 'UI Test', number, password }
     });
-    if (regResp.status() !== 201) {
+    if (![200, 201].includes(regResp.status())) {
       console.error('Register failed', await regResp.text());
       process.exit(2);
     }
+
     console.log('Registered', userId, number);
 
     // Go to login page

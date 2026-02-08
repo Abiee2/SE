@@ -1,0 +1,11 @@
+/* styles.css (injected via content.js if needed) */
+.uaps-simple-mode {
+  line-height: 1.8;
+  max-width: 70ch;
+  margin: auto;
+}
+.uaps-zoom {
+  transform: scale(1.2);
+  transform-origin: top left;
+}
+/* Add more as needed */
